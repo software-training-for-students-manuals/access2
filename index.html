@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<!-- 
+WELCOME USER! You've reached the source code for a manual created by STS. If you plan on updating or editing this manual, then you're in the right place!
+
+Before editing any STS manuals, please read through the editing guide at https://sts.doit.wisc.edu/manual-editing-guide and follow all recommendations. It is important that we follow the conventions set in the guide in order to maintain quality and consistency across all of our training materials.
+
+Good luck, and have fun!
+-->
+
+    <!-- Manual title -->
+    <title>Access 2</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Software manual provided by Software Training for Students at the University of Wisconsin.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' id='uwmadison-fonts-css'  href='https://brand.wisc.edu/content/themes/uw-theme/dist/fonts/uw160/fonts.css?ver=1.1.1' type='text/css' media='all' /><link rel="stylesheet" type="text/css" href="../master-files/css/stylesheet.css">
+        <script src="../master-files/highlight.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="../master-files/smooth-scroll.js"></script>
+        <script src="../master-files/primary-functions.js"></script>
+        <script src="../master-files/ga.js"></script>    
+
+</head>
+
+	
+<body>
+	<!--Manual Front Page-->
+    <div class="manual-front-page"> 
+        <div id="coverpage-title"> 
+            <h1>Access 2</h1> 
+            <h2>Advanced Database Topics</h2> 
+        </div> 
+        
+        <div id="about-page"></div> 
+        
+        <div id="outline"></div> 
+        
+    </div>
+
+    <section class="topic">
+    	<h1>Introduction</h1>
+		<h2>Requirements</h2>
+		<p>You should already have attended the Access 1 class offered by STS or have equivalent experience. Specifically this class will require students to:</p>
+		<ul>
+		    <li>
+		        <p>Understand basic relational database concepts</p>
+		    </li>
+		    <li>
+		        <p>Create and modify tables</p>
+		    </li>
+		    <li>
+		        <p>Create relationships</p>
+		    </li>
+		</ul>
+		<h2>How to Get Access</h2>
+		<p>To get Access on a Mac computer, you will need to buy it from the Microsoft website. You can buy a monthly subscription to the suite, or you can use your .edu email address to buy a 4-year subscription. However, if you have a Windows computer, you can download the entire suite of softwares for free from DoIT <a href="https://kb.wisc.edu/page.php?id=43841">here</a>. </p>
+    </section>
+
+    <section class="topic">
+	    <h1>Editing Relationships</h1>
+	    <p>To begin, we will review Access relationships and learn how to manipulate the various relationship rules that Access uses to keep data organized.</p>
+	    <h2>Referential Integrity</h2>
+	    <p>Referential Integrity is a system of rules that Access enforces to ensure that relationships between records in related tables are valid, and that you don’t accidentally delete or change related data. We strongly suggest using Referential Integrity with all relationships.</p>
+	    <ul>
+	        <li>
+	            <p>You cannot enter a value in any foreign key when the value does not exist somewhere in the related primary key.</p>
+	        </li>
+	        <li>
+	            <p>You cannot modify a primary key value if that value appears in a foreign key.</p>
+	        </li>
+	        <li>
+	            <p>You cannot delete a record if that record's primary key value appears in a foreign key.</p>
+	        </li>
+	    </ul>
+	    <h3>Exercise: Testing Referential Integrity</h3>
+	    <p>In the following steps, we will test the rules of RI to better understand them. If everything goes as planned, we will have made no changes to our database after this exercise!</p>
+	    <ol class="instruction-list">
+	        <li>
+	            <p>Open <span class="type-text">access2-classfile.accdb</span> from the Class Files folder and take a second to look at what tables it contains. The database contains the same information as the one from Access 1, but a few tables have been added to increase the informational value of the database.</li>
+	        <li>
+	            <p>Let's see if we can enter a value in the business_id field of the <b>hours</b> table when that value does not exist in the business_id field of the <b>business</b> table.</p>
+	            <ol class="instruction-list">
+	                <li>
+	                    <p>Open the <b>hours</b> table by double-clicking on its name in the Objects panel.</p>
+	                </li>
+	                <div class="side-image-small"><img src="images/relationships-ri-1.png" alt="New Record"></div>
+	                <li>
+	                    <p>In the Home tab of the Ribbon, in the Records section, click "New."</p>
+	                </li>
+	                <li>
+	                    <p>Enter values for both fields and press the Enter key on your keyboard.</p>
+	                    <div class="centered-image-large"><img src="images/relationships-ri-2.png" alt="Access Error"></div>
+	                    <p>Access will notify us that the record cannot be added.</p>
+	                </li>
+	                <li>
+	                    <p>Click "OK" and then press the Escape key to revert the record to its original state.</p>
+	                </li>
+	            </ol>
+	        </li>
+	        <li>
+	            <p>Now we will attempt to change a user_id value in <b>user</b> even though that value exists in the user_id field in the foreign table <b>elite</b>.</p>
+	            <ol class="instruction-list">
+	                <li>
+	                    <p>Open the <b>user</b> table and change any value in the user_id field. </p>
+	                </li>
+	                <li>
+	                    <p>Press Shift + Enter to attempt to finalize this change. Access will notify us that the record cannot be changed.</p>
+	                </li>
+	                <li>
+	                    <p>Click "OK" and then press the Escape key to revert the record to its original state.</p>
+	                </li>
+	            </ol>
+	        </li>
+	        <li>
+	            <p>Finally, let's try to delete a record in the primary table <b>user</b> even though its user_id value exists in the foreign key of <b>elite</b>.</p>
+	            <div class="side-image-medium"><img src="images/relationships-ri-3.png" alt="Delete Record"></div>
+	            <ol class="instruction-list">
+	                <li>
+	                    <p>Still in the <b>user</b> table, right-click on the grey box to the left of any record's user_id value. </p>
+	                </li>
+	                <li>
+	                    <p>Select "Delete Record." Access will notify us that the record cannot be deleted.</p>
+	                </li>
+	                <li>
+	                    <p>Click OK.</p>
+	                </li>
+	            </ol>
+	        </li>
+	    </ol>
+	    <h3>Exercise: Cascade Delete Related Records</h3>
+	    <p>Though Referential Integrity is useful to keep tables synchronized, there are times when you will want to change information For example: In 2015, Amy's Cafe was closed and reopened as a new restaurant called Mezze. Thus, we do not need Amy's Cafe in our database anymore. </p>
+	    <p>We could delete the business record if we turned off Referential Integrity, but then we would need to delete every record that relates to the business by hand-- and Access can do this work for us if we turn on Cascade Delete Related Records.</p>
+	    <ol class="instruction-list">
+	        <li>
+	            <p>Close out of all open tabs. To be sure we didn't change any records, don't save any of the tables.</p>
+	        </li>
+	        <div class="side-image-large"><img src="images/relationships-cd-1.png" alt="Edit Relationships"></div>
+	        <li>
+	            <p>Open Relationships from the Database Tools tab of the Ribbon.</p>
+	        </li>
+	        <li>
+	            <p>Right-click on one of the lines connecting the <b>business</b> table to its three foreign tables and click "Edit Relationship."</p>
+	        </li>
+	        <li>
+	            <p>In the Edit Relationship box that appears, check the box next to "Cascade Delete Related Records."</p>
+	        </li>
+	        <li>
+	            <p>Repeat steps 3 and 4 for the <b>reviews</b> table and the <b>categories</b> table.</p>
+	        </li>
+	        <div class="centered-image-small"><img src="images/relationships-cd-2.png" alt="Cascade Delete Related Records"></div>
+	        <li>
+	            <p>Re-open the <b>business</b> table, find the record for Amy's Cafe, and try again to delete it. (If you have trouble finding the record, sort the data by clicking on the drop-down arrow next to the business_name field header.) </p>
+	            <div class="centered-image-large"><img src="images/relationships-cd-3.png" alt="Warning"></div>
+	            <p>Make sure you understand the warning that appears. You won't be able to undo this step!</p>
+	        </li>
+	        <div class="sidebar-note">
+	            <h2>Testing Cascade Update Related Fields</h2>
+	            <p>If you turned on CURF, you can test it by changing one of the business_id values in the <b>business</b> table. Access should automatically update the related values in the business_id fields of <b>categories</b>, <b>hours</b>, and <b>reviews</b>.</p>
+	        </div>
+	        <li>
+	            <p>Click Yes on the warning. All records in our entire database that referenced Amy's Cafe are now deleted.</p>
+	        </li>
+	        <li>
+	            <p>Close out of all open Access objects, saving those that we have made changes to.</p>
+	        </li>
+	    </ol>
+    </section>
+
+    <section class="topic">
+	    <h1>Queries</h1>
+	    <p>Now that we understand the rules governing our database's relationships, we can now use these relationships to create queries. </p>
+	    <p>As their name implies, queries are questions that we ask about a database. Within Access, a query is an object (just like a table is an object) that can be saved, edited, and viewed as a spreadsheet. </p>
+	    <h3>Exercise: Your First Query</h3>
+	    <p>For our first example, we will write a query that will respond with an alphabetically-sorted list of the name, address, and star rating of every business in our database.</p>
+	    <div class="side-image-small"><img src="images/queries-1-1.png" alt="Query Design button"></div>
+	    <ol class="instruction-list">
+	        <li>
+	            <p>In the Create tab of the Ribbon, click Query Design. A new Query object will open in Design View.</p>
+	        </li>
+	        <li>
+	            <p>In the Show Table box that appears, highlight <b>business</b> and click Add, then Close.</p>
+	            <div class="centered-image-medium"><img src="images/queries-1-2.png" alt="Show Table dialog"></div>
+	        </li>
+	        <li>
+	            <p>We will now put three fields into the Query-By-Example Grid below. In the <b>business</b> table that we just added to our query, double-click on business_name, full_address, and stars. The three fields will appear as columns in the QBE Grid.</p>
+	            <div class="centered-image-medium"><img src="images/queries-1-3.png" alt="Sample"></div>
+	            <p>Finally, to make our query result easier to navigate, we will sort the records alphabetically by the business_name field.</p>
+	        </li>
+	        <li>
+	            <p>Click on the dropdown arrow in the business_name column's Sort value and choose "Ascending."</p>
+	            <div class="centered-image-medium"><img src="images/queries-1-4.png" alt="Sorting by Ascending"></div>
+	        </li>
+	        <div class="side-image-small"><img src="images/queries-1-5.png" alt="Run Button"></div>
+	        <li>
+	            <p>Our query is finished -- all we have to do is view it. In the Design tab of the Ribbon, click on the Run button. </p>
+	            <div class="centered-image-medium"><img src="images/queries-1-6.png" alt="First Query Sample"></div>
+	            <p>Congrats on your first query! You should see an alphabetical list of businesses with their address and star information.</p>
+	        </li>
+	        <div class="sidebar-note">
+	            <h2>About Editing Queries</h2>
+	            <p>Clicking the Run button is functionally similar to switching a query object to Datasheet View. If you would like to edit a query after running it, you can switch to Design View (in the Home tab of the Ribbon) to get back to the QBE Grid.</p>
+	        </div>
+	        <li>
+	            <p>Right-click on the object tab for Query 1 and click Save. Give it a descriptive name such as "Business List" and click OK. </p>
+	            <p>Now our query shows up as an object in our Access Objects panel, right underneath our tables. We can run this query at any time by double-clicking on its name in the Objects Panel.</p>
+	        </li>
+	    </ol>
+	    <h3>Exercise: Advanced Querying</h3>
+	    <p>We will now create a query that extends across two tables. First, we will draw from the <b>business</b> and <b>hours</b> tables and use Criteria to determine a list of businesses that are open for brunch on Sundays.</p>
+	    <ol class="instruction-list">
+	        <li>
+	            <p>Create a new query (click on Query Design in the Create tab).</p>
+	        </li>
+	        <li>
+	            <p>Add the <b>business</b> table and the <b>hours</b> table by highlighting them and clicking Add, then click Close.</p>
+	        </li>
+	        <li>
+	            <p>Add the following fields to the QBE Grid.</p>
+	            <ul>
+	                <li>
+	                    <p>From <b>business</b>:</p>
+	                    <ul>
+	                        <li>
+	                            <p>business_name</p>
+	                        </li>
+	                        <br> </ul>
+	                </li>
+	                <li>From <b>hours</b>:
+	                    <ul>
+	                        <li>
+	                            <p>day_of_week</p>
+	                        </li>
+	                        <li>
+	                            <p>open</p>
+	                        </li>
+	                        <li>
+	                            <p>close</p>
+	                        </li>
+	                    </ul>
+	                </li>
+	            </ul>
+	            <p>If we run the query now, Access will return a separate record for every day that a business is open. We must first limit our results to businesses that are open on Sundays. </p>
+	        </li>
+	        <li>
+	            <p>Add the following to the Criteria cell in the day_of_week column in the QBE Grid: ="Sunday"</p>
+	            <p>Your QBE grid should look like this:</p>
+	            <div class="centered-image-large"><img src="images/queries-2-1.png" alt="Query Sample"></div>
+	        </li>
+	        <li>
+	            <p>Click Run. Your query should show a list of 134 businesses that are open on Sundays. Next, we will add two more criteria to limit our results to businesses that are open at 10am.</p>
+	        </li>
+	        <div class="sidebar-note">
+	            <h2>More on Criteria</h2>
+	            <p>Notice that criteria that deal with time must include # characters before and after the time value. A full list of different types of criteria can be found in Appendix A of this manual.</p>
+	        </div>
+	        <li>
+	            <p>Click Design View to get back to the QBE Grid.</p>
+	        </li>
+	        <li>
+	            <p>Add two more criteria:</p>
+	            <ul>
+	                <li><b>open</b>: input <span class="type-text">&lt;#10:00:00 AM#</span> in the Criteria row.</li>
+	                <li><b>close</b>: input <span class="type-text">&gt;#10:00:00 AM#</span> in the Criteria row.</li>
+	            </ul>
+	        </li>
+	        <li>
+	            <p>Run the query. Now there should be only 25 rows, each showing a business that is open at 10:00 AM.</p>
+	            <div class="centered-image-medium"><img src="images/queries-2-2.png" alt="Query Sample 2"></div>
+	        </li>
+	        <li>
+	            <p>Congratulations, you're a query genius! Save this query as "Sunday Brunch" and close out of it. Later, we will use a Report to display this data in a more aesthetically pleasing way! Before that, though, we will take a look at Forms.</p>
+	        </li>
+	    </ol>
+    </section>
+
+    <section class="topic">
+    	<h1>Forms</h1>
+	    <p>Forms allow us to quickly look over a record in a database. They can also speed up data entry and help to avoid mistakes. Today, we will create a form that can sift through the <span class="type-text">user</span> table and add new user records.</p>
+	    <h2>Access Controls</h2>
+	    <p>These controls are used for forms in Access. They can be found on the Design tab of the Ribbon when a form object is open.</p>
+	    <div class="toolbox">
+	        <div> <img src="images/icon-select.png" alt="Select">
+	            <p><b>Select:</b> When the Select control is selected, you can click on any form element and move it, resize it, or right-click on it to show more options.</p>
+	        </div>
+	        <div> <img src="images/icon-textbox.png" alt="Text Box">
+	            <p><b>Text Box:</b> Creates a text box on a form or report. This text box will show dynamic information that can be edited by the form user.</p>
+	        </div>
+	        <div> <img src="images/icon-label.png" alt="Label">
+	            <p><b>Label:</b> Creates a label element, which is purely for informational purposes and cannot be edited by the form user.</p>
+	        </div>
+	        <div> <img src="images/icon-button.png" alt="Button">
+	            <p><b>Button:</b> Creates a button that can be utilized by the form user. Buttons can have a wide variety of functions.</p>
+	        </div>
+	    </div>
+	    <h3>Exercise: Creating a Form</h3>
+	    <div class="side-image-small"><img src="images/forms-1.png" alt="Form Design Button"></div>
+	    <ol class="instruction-list">
+	        <li>
+	            <p>In the Create tab, click Form Design.</p>
+	            <p>A new Form object will open in Design View. In the Design tab in the Controls section, there are multiple tools that we will use to add content to our form.</p>
+	        </li> <img class="sidebar-icon" src="images/icon-label.png" alt="Label">
+	        <li>
+	            <p>Select the Label control and click once near the top-left of the form section labeled "Detail."</p>
+	        </li>
+	        <li>
+	            <p>In the label box that appears, type "User Selection" as the title for this form and press the Enter key.</p>
+	        </li>
+	        <div class="centered-image-medium"><img src="images/forms-2.png" alt="Form TItle"></div> <img class="sidebar-icon" src="images/icon-select.png" alt="Select">
+	        <li>
+	            <p>Click on the Select control and use it to select the new label. You can move the label by clicking and dragging on its boundary or resize it by clicking and dragging on any of the boxes on the corners or sides of the label. If you want, you can also switch to the Format tab while and change its font, size, or color.</p>
+	            <div class="centered-image-medium"><img src="images/forms-3.png" alt="Title formatted"></div>
+	            <p>Now that we have a title for our form, we will add a textbox for each field in the <span class="type-text">user</span> table. At first, these textboxes will only be able to show information about our <span class="type-text">user</span> table.</p>
+	        </li>
+	        <div class="side-image-medium"><img src="images/forms-4.png" alt="Property Sheet"></div>
+	        <li>
+	            <p>On the right side of your screen is the Property Sheet. Make sure that "Form" is selected in the drop-down menu and click on the Data tab.</p>
+	        </li>
+	        <li>
+	            <p>In the Data Properties, change Record Source to "user" and Order By to "[user].[yelping_since]".</p>
+	        </li>
+	        <li>
+	            <p>Now we are ready to build our form. Move back to the Design Tab and click the Add Existing Fields button. The Property Sheet will change into a Field List.</p>
+	        </li>
+	        <li>
+	            <p>Click and drag user_id, name, and yelping_since from the Field List to the form underneath the User Selection label we created. You can use the Select control to move them to a place that looks nice.</p>
+	            <div class="centered-image-medium"><img src="images/forms-6.png" alt="Moving Fields"></div>
+	            <p>Each field is shown as two boxes: the left one is a label and the right one is a text box. Moving one element will move the other element an equal amount unless you click and drag it by the grey box on its top-left corner. </p>
+	        </li>
+	        <li>
+	            <p>We're almost done! We will now create three buttons so that our form has an interface. Two of the buttons will move the user through the existing records in the <span class="type-text">user</span> table, and the third button will allow the user to create a new record in the table.</p> <img class="sidebar-icon" src="images/icon-button.png" alt="Design tab">
+	            <ol class="instruction-list">
+	                <li>
+	                    <p>In the Design tab of the ribbon, click on the Button control.</p>
+	                </li>
+	                <li>
+	                    <p>Click in a space beneath the three field boxes.</p>
+	                </li>
+	                <li>
+	                    <p>A Command Button Wizard will appear with two sets of options. Select "Record Navigation" in Categories and "Go To Next Record" in Actions, then click Finish. </p>
+	                    <div class="centered-image-medium"><img src="images/forms-7.png" alt="Command Button Wizard"></div>
+	                    <p>A button will appear on the form.</p>
+	                </li>
+	                <li>
+	                    <p>Repeat steps 1 through 3 two more times with these changes in step 3:</p>
+	                    <ul>
+	                        <li>
+	                            <p>Select "Record Navigation" in Categories and "Go To Previous Record" in Actions.</p>
+	                        </li>
+	                        <li>
+	                            <p>Select "Record Operations" in Categories and "Add New Record" in Actions.</p>
+	                        </li>
+	                    </ul>
+	                </li>
+	                <li>
+	                    <p>Your form should now have three buttons. Move them with the Select control to put them in a more intuitive arrangement.</p>
+	                </li>
+	                <div class="centered-image-medium"><img src="images/forms-8.png" alt="Command Button Example"></div>
+	            </ol>
+	        </li>
+	    </ol>
+	    <p>The form is complete! In the Design tab, switch to Form View and try viewing and editing the <b>user</b> table with your brand new form:</p>
+	    <ul>
+	        <li>
+	            <p>Sift through the <b>user</b> table one at a time with the right and left arrow buttons.</p>
+	        </li>
+	        <li>
+	            <p>Change the value for all three fields and click the New Record button, then find that new record in the <b>user</b> table! </p>
+	        </li>
+	        <div class="centered-image-medium"><img src="images/forms-9.png" alt="Complete form"></div>
+	        <li>
+	            <p>If you want, go back to the form's Design View and try adding different buttons to see what they do. Some good buttons to try are:</p>
+	            <ul>
+	                <li>
+	                    <p>Record Navigation &gt; Go To First / Go To Last</p>
+	                </li>
+	                <li>
+	                    <p>Record Operation &gt; Delete Record</p>
+	                </li>
+	                <li>
+	                    <p>Application &gt; Quit Application (Clicking this button will close out of Access!)</p>
+	                </li>
+	            </ul>
+	        </li>
+	    </ul>
+	    <p>Save and close your Form object. You can open it again at any time, just like a table or query!</p>
+    </section>
+
+    <section class="topic">
+	    <h1>Reports</h1>
+	    <p>Reports are made to be printed. You can use reports when you want to send information as a PDF or paper document rather than sending an entire database. Today, we will create a report based on the second query we made today: what businesses are open for Sunday brunch?</p>
+	    <h3>Exercise: Building a Report</h3>
+	    <div class="side-image-medium"><img src="images/reports-building-1.png" alt="Report Design button"></div>
+	    <ol class="instruction-list">
+	        <li>
+	            <p>In the Create Tab, click on the Report Design button. A new Report object will open in Design View.</p>
+	        </li>
+	        <div class="side-image-medium"><img src="images/reports-building-2.png" alt="Add Report Header/Footer"></div>
+	        <li>
+	            <p>Your report should have a Page Header section, a Detail section, and a Page Footer section. Right-click anywhere on the report and click on "Report Header/Footer" to add two more sections.</p>
+	            <p>The five sections of our report fill the following roles:</p>
+	            <ul>
+	                <li>
+	                    <p>Report Header: shown at the beginning of the report</p>
+	                </li>
+	                <li>
+	                    <p>Page Header: shown at the beginning of every page</p>
+	                </li>
+	                <li>
+	                    <p>Detail: "body" of the report, will repeat over and over to fill the report's pages</p>
+	                </li>
+	                <li>
+	                    <p>Page Footer: shown at the end of every page</p>
+	                </li>
+	                <li>
+	                    <p>Report Footer: shown at the very end of the report</p>
+	                </li>
+	            </ul>
+	        </li>
+	        <li>
+	            <p>The Field List should still be open from before. Switch to the Property Sheet by clicking on the Property Sheet button in the Design tab.</p>
+	        </li>
+	        <li>
+	            <p>In the Property Sheet, make sure that "Report" is selected in the drop-down box. In the Data tab of the Property Sheet, change the Record Source to the query we created about Sunday brunch locations.</p>
+	        </li>
+	        <div class="centered-image-small"><img src="images/reports-building-3.png" alt="Property Sheet Example"></div>
+	        <li>
+	            <p>In the Design tab of the Ribbon, click the "Add Existing Fields" button to re-open the Field List.</p>
+	        </li>
+	        <li>
+	            <p>Click and drag the business_name, open, close, and stars fields from the Field List to the Detail section of your report.</p>
+	            <div class="centered-image-medium"><img src="images/reports-building-4.png" alt="Report 1 Preview"></div>
+	            <p>We're ready to preview our report, but we'll come back to it soon.</p>
+	        </li>
+	        <li>
+	            <p>Switch to Report View and scroll through the report.</p>
+	        </li>
+	    </ol>
+	    <p>We need to make a few small changes: first, we should add header and footer information, and second, we should cut out the blank spaces in between records. Finally, we will edit the placement and descriptions of our record values so that they are a bit easier to comprehend. </p>
+	    <h3>Exercise: Editing a Report</h3>
+	    <ol class="instruction-list">
+	        <li>
+	            <p>Switch back to Design View.</p>
+	        </li>
+	        <li>
+	            <p>Each of the five sections of our report is resizeable. Make the Report Header a bit larger by clicking and dragging downward on its lower boundary.</p>
+	        </li> <img class="sidebar-icon" src="images/icon-label.png" alt="Label Control">
+	        <li>
+	            <p>Use the Label control to create a title, description, and byline for our report in the Report Header section. Remember that you can edit the text of a selected element by switching to the Format tab!</p>
+	        </li>
+	        <div class="centered-image-large"><img src="images/reports-editing-1.png" alt="Title and description"></div> <img class="sidebar-icon" src="images/icon-select.png" alt="Select Control">
+	        <li>
+	            <p>Use the Select control to make edits to the elements in the Detail section. Use the following as guidance, but feel free to make your own edits as you see fit!
+	                <div class="sidebar-note">
+	                    <h2>Caution</h2>
+	                    <p>Note that you can edit the content of the label elements, but changing the content of text boxes will cause your report not to work. However, you can use the Format tab to reformat any element you wish!</p>
+	                </div>
+	                <ol class="instruction-list">
+	                    <li>
+	                        <p>Delete the label for business_name (the element on the left, not the text box to the right) by selecting it and pressing the Delete key on your keyboard.</p>
+	                    </li>
+	                    <li>
+	                        <p>Change the labels for open and close to be a bit more descriptive.</p>
+	                    </li>
+	                    <li>
+	                        <p>Rearrange all of the fields and labels to a configuration that you like.</p>
+	                    </li>
+	                    <li>
+	                        <p>Click and drag the bottom boundary of the Detail section upward so there is not so much blank space.</p>
+	                    </li>
+	                </ol>
+	        </li>
+	        <li>
+	            <p>Keep making edits to your report until you are happy with how it looks! You may use the example below as a template, but you may be as creative as you wish. At any point, you can switch to Report View to preview how your report will look!</p>
+	        </li>
+	        <div class="full-width-image"><img src="images/reports-editing-2.png" alt="Report 1 Template"></div>
+	        <div class="full-width-image"><img src="images/reports-editing-3.png" alt="Report 1 Sample"></div>
+	        <li>
+	            <p>When you are finished making changes, make sure to save your report. You can now print your report by changing the View to Print Preview and clicking Print! You can also make a PDF from the Print Preview view by clicking on the "PDF or XPS" button in the Data section of the Ribbon. Congratulations on a well-designed Report!</p>
+	        </li>
+	    </ol>
+	</section>
+</body>
+</html>
